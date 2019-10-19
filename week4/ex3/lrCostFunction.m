@@ -36,8 +36,23 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+h = sigmoid(X * theta);          % X*theta => mx1 where each entry = theta' * x(i)
+%pos = -y .* log(h);              % mx1 .* mx1 => mx1, that or y' * log
+%neg = (1 - y) .* log(1 - h);     % "
+%J = (1 / m) * sum(pos - neg);
 
+% DO NOT REGULARIZE THETA(1), DAMN BOY.
+theta1 = [0 ; theta(2:end)];
 
+reg = (lambda / (2 * m)) * (theta1' * theta1);
+
+pos = -y' * log(h);
+neg = (1 - y)' * log(1 - h);
+
+J = (1 / m) * (pos - neg) + reg;
+
+error = h - y;
+grad = (1 / m) * (X' * error) + (lambda / m) * theta1;
 
 
 
