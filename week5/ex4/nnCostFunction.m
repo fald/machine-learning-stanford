@@ -39,25 +39,25 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
-% A = cell() nevermind, this is 1 hidden layer, not arbitrary number of layers! Way easier.
-%a3 = h
-% X e mxn+1, Theta1 e hxn+1
+
 a1 = [ones(m, 1) X];
-a2 = sigmoid(a1 * Theta1');
-h = sigmoid([ones(m, 1) a2] * Theta2');
+a2 = [ones(m, 1) sigmoid(a1 * Theta1')];
+h = sigmoid(a2 * Theta2');
 
 
 y_mat = eye(num_labels)(y, :);
-pos = sum(-y_mat .* log(h)); % y_mat is no longer a vector, damnit.
-neg = sum((1 - y_mat) .* log(1 - h));
-%reg_term = (lambda / (2*m)) * (Theta1' * Theta1 + Theta2' * Theta2);
-% Nope, Thetas are not vectors.
-Theta1_reg = Theta1(:, 2:end);
-Theta2_reg = Theta2(:, 2:end);
-%reg_term = (lambda / (2 * m)) * (sum((Theta1_reg .^ 2 + Theta2_reg .^ 2)(:)));
-reg_term = (lambda / (2 * m)) * sum((Theta1_reg .^ 2)(:)) + sum((Theta2_reg .^ 2)(:));
 
-J = (1 / m) * sum((pos - neg)(:)); %+ reg_term;
+pos = -y_mat .* log(h);
+neg = (1 - y_mat) .* log(1 - h);
+
+Theta1_reg = Theta1(:, 2:end);
+Theta1_sum = sum((Theta1_reg .^ 2)(:));
+Theta2_reg = Theta2(:, 2:end);
+Theta2_sum = sum((Theta2_reg .^ 2)(:));
+
+reg_term = (lambda / (2 * m)) * (Theta1_sum + Theta2_sum);
+
+J = (1 / m) * sum((pos - neg)(:)) + reg_term;
 
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
