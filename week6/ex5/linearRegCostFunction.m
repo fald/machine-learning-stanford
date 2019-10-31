@@ -21,15 +21,14 @@ grad = zeros(size(theta));
 
 %X1 = [ones(m, 1) X];
 theta1 = theta(2:end, :);
-h = X * theta;       % m x 2 x 2 x 1 = m x 1
+h = X * theta;       
 error = (h - y)' * (h - y);
 reg = (lambda / (2 * m)) * (theta1' * theta1);
 J = reg + error / (2 * m);
 
-
-
-
-
+base_grad = (h - y)' * X;           % (m x 1)' * m x n -> 1 x n
+reg_grad = [0; theta1];             % m x n;
+grad = (base_grad' + lambda * reg_grad) / m;
 
 
 
