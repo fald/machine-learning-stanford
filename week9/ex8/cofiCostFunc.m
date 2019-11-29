@@ -47,7 +47,8 @@ X_grad = (R .* (X * Theta' - Y)) * Theta;
 % Oops, gotta transpose. And get the transpose on the right bit >_<
 Theta_grad = (R .* (X * Theta' - Y))' * X;
 
-reg = (lambda / 2) * sum(sum(X .^ 2)) + sum(sum(Theta .^ 2));
+% Lol bracket distribution.
+reg = (lambda / 2) * (sum(sum(X .^ 2)) + sum(sum(Theta .^ 2)));
 
 J += reg;
 X_grad += lambda * X;
