@@ -40,18 +40,18 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% Non regularized
+J = sum(sum(R .* (X * Theta' - Y) .^ 2)) / 2;
+% Hol' up, I need to get the derivative myself? What is this, hell?
+X_grad = (R .* (X * Theta' - Y)) * Theta;
+% Oops, gotta transpose. And get the transpose on the right bit >_<
+Theta_grad = (R .* (X * Theta' - Y))' * X;
 
+reg = (lambda / 2) * sum(sum(X .^ 2)) + sum(sum(Theta .^ 2));
 
-
-
-
-
-
-
-
-
-
-
+J += reg;
+X_grad += lambda * X;
+Theta_grad += lambda * Theta;
 
 
 
