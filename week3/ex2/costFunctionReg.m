@@ -25,12 +25,13 @@ pos = (1 - y)' * log(1 - h);
 reg_term = (lambda / (2 * m)) * (theta(2:size(theta))' * theta(2:size(theta)));
 J = -((1 / m) * (neg + pos)) + reg_term;
 
-grad(1) = (1 / m) * sum(error .* X(:, 1));
-for i=2:size(grad)
-  grad(i) = (1 / m) * sum(error .* X(:, i)) + (lambda / m) * theta(i);
-end
-% can def do this better... (X' * error) + lambda*[0; theta(2:size(theta))] ?
 
+%grad(1) = (1 / m) * sum(error .* X(:, 1));
+%for i=2:size(grad)
+ % grad(i) = (1 / m) * sum(error .* X(:, i)) + (lambda / m) * theta(i);
+%end
+% can def do this better... (X' * error) + lambda*[0; theta(2:size(theta))] ?
+grad = (1 / m) * ((X' * error) + lambda * [0; theta(2:end)]);
 
 
 

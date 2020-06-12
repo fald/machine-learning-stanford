@@ -28,10 +28,10 @@ neg = -y' * log(h);           % 1*m x m*1 => 1*1
 pos = (1 - y)' * log(1 - h);  % 1*m x m*1 => 1*1
 
 J = (1 / m) * (neg - pos);    % 1*1
-for i=1:size(theta)
-  grad(i) = (1 / m) * sum(error .* X(:, i));
-end
-
+%for i=1:size(theta)
+ % grad(i) = (1 / m) * sum(error .* X(:, i));
+%end
+grad = (1 / m) * (X' * error);
 
 
 

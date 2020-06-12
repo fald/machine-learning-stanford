@@ -105,6 +105,7 @@ fprintf('\n');
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
 price = gradientDescentMulti(X, y, theta, alpha, num_iters); % You should change this
+price = [1 1650 3] * theta;
 
 
 % ============================================================
